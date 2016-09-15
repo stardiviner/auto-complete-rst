@@ -49,8 +49,15 @@
 
 (defun auto-complete-rst-genesource-command ()
   (mapconcat 'identity
-             (append (list "python -W ignore"
-                           auto-complete-rst-genesource-py)
+             (append (list
+                      (if (executable-find "python2")
+                          "python2"
+                        "python")
+                      "-W ignore"
+                      (concat
+                       auto-complete-rst-genesource-py
+                       (if (executable-find "python2") "2" "3"))
+                      )
                      auto-complete-rst-sphinx-extensions)
              " "))
 
